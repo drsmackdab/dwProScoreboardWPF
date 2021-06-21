@@ -1,0 +1,3 @@
+All sound effects © 2017, Epic Games, Inc. All rights reserved. Epic, Epic Games, the Epic Games logo, Unreal, Unreal Engine, Unreal Tournament, and the Unreal Tournament 3 logo are trademarks or registered trademarks of Epic Games, Inc. in the United States of America and elsewhere.
+
+They are included for demonstration purposes only. It is the responsibility of the user to replace these sounds with your own licensed or royalty free content. No responsibility is taken or implied for ignoring this message.

@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="dwProScoreboardWPF.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="gameTicks" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">600</Value>
+    </Setting>
+    <Setting Name="gameBreakTicks" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="raceTo" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
+    <Setting Name="blueName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">HOME</Value>
+    </Setting>
+    <Setting Name="redName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AWAY</Value>
+    </Setting>
+    <Setting Name="refTicks" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="API_URI" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://littleboy:8083/api/scoreboard/</Value>
+    </Setting>
+    <Setting Name="pointBreakTicks" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
+    <Setting Name="serialPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM9</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

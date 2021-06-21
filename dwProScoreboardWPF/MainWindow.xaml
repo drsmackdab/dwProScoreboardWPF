@@ -1,0 +1,204 @@
+﻿<Window x:Name="wpfMain" x:Class="dwProScoreboardWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dwProScoreboardWPF"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Smackdab Web Scoreboard WPF" WindowState="Maximized" d:DesignWidth="1165.978" d:DesignHeight="660.637" WindowStartupLocation="CenterOwner" Closing="wpfMain_Closing">
+    <Window.Background>
+        <ImageBrush ImageSource="bg1.jpg"/>
+    </Window.Background>
+
+
+
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="Border" >
+                <Setter Property="Padding" Value="8,8,8,8" />
+            </Style>
+            <sys:Double x:Key="SlideOffSet">350</sys:Double>
+            <Storyboard x:Key="SlideRight">
+                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                             From="0" To="{StaticResource SlideOffSet}"
+                             Duration="0:0:0.2" />
+            </Storyboard>
+            <Storyboard x:Key="SlideLeft">
+                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                             From="{StaticResource SlideOffSet}" To="0" 
+                             Duration="0:0:0.2" />
+            </Storyboard>
+            <Style TargetType="Canvas">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsChecked, ElementName=SlideState}" Value="True">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard Storyboard="{StaticResource SlideLeft}" />
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <BeginStoryboard Storyboard="{StaticResource SlideRight}" />
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Settings Panel-->
+        <Canvas Width="{StaticResource SlideOffSet}" Height="500" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,0,0" Grid.Column="2" Panel.ZIndex="1">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="{StaticResource SlideOffSet}" Y="0"/>
+            </Canvas.RenderTransform>
+            <Image Source="icoSettings_lg.png" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1" Canvas.Left="255" Canvas.Top="20" Height="86" Width="83" />
+            <Border Background="White" Width="350" CornerRadius="10">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="8"/>
+                </Border.Effect>
+                <StackPanel Orientation="Vertical">
+                    <Label FontSize="22">Scoreboard Settings:</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontWeight="Bold">Race To Points:</Label>
+                        <TextBox x:Name="txtSetRaceTo" Width="40" Margin="6,0,0,0" TextChanged="txtSetRaceTo_TextChanged" />
+                    </StackPanel>
+                    <Label Margin="0,12,0,0" FontWeight="Bold">Game Time:</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Min:</Label>
+                        <TextBox x:Name="txtSetGameMin" Width="40" Margin="6,0,0,0" TextChanged="txtSetGameMin_TextChanged" />
+                        <Label>Sec:</Label>
+                        <TextBox x:Name="txtSetGameSec" Width="40" Margin="6,0,0,0" TextChanged="txtSetGameSec_TextChanged" />
+                    </StackPanel>
+                    <Label Margin="0,12,0,0" FontWeight="Bold">Time between points:</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Min:</Label>
+                        <TextBox x:Name="txtSetPointBreakMin" Width="40" Margin="6,0,0,0" TextChanged="txtSetPointBreakMin_TextChanged" />
+                        <Label>Sec:</Label>
+                        <TextBox x:Name="txtSetPointBreakSec" Width="40" Margin="6,0,0,0" TextChanged="txtSetPointBreakSec_TextChanged" />
+                    </StackPanel>
+                    <Label Margin="0,12,0,0" FontWeight="Bold">Time between games:</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Min:</Label>
+                        <TextBox x:Name="txtSetGameBreakMin" Width="40" Margin="6,0,0,0" TextChanged="txtSetGameBreakMin_TextChanged" />
+                        <Label>Sec:</Label>
+                        <TextBox x:Name="txtSetGameBreakSec" Width="40" Margin="6,0,0,0" TextChanged="txtSetGameBreakSec_TextChanged" />
+                    </StackPanel>
+                    <Label Margin="0,12,0,0" FontWeight="Bold">Ref Check Time:</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Sec:</Label>
+                        <TextBox x:Name="txtSetRefSec" Width="40" Margin="6,0,0,0" TextChanged="txtSetRefSec_TextChanged" />
+                    </StackPanel>
+                    <Label Margin="0,12,0,0" FontWeight="Bold">Web API URI:</Label>
+                    <TextBox x:Name="txtAPIURI" TextChanged="txtAPIURI_TextChanged" />
+                </StackPanel>
+            </Border>
+        </Canvas>
+
+        <!-- Main Content Panels-->
+        <Border Grid.Column="0" Grid.Row="0">
+            <DockPanel>
+                <Label HorizontalAlignment="Center" DockPanel.Dock="Top">Home Team Name</Label>
+                <TextBox x:Name="txtBlueName" HorizontalAlignment="Stretch" DockPanel.Dock="Top" HorizontalContentAlignment="Center" Text="HOME" TextChanged="txtBlueName_TextChanged" />
+                <Border VerticalAlignment="Bottom" DockPanel.Dock="Bottom" BorderBrush="#7FFFFFFF" CornerRadius="5" BorderThickness="2">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform Angle="-48.366" CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="#FF0074FF" Offset="0"/>
+                            <GradientStop Color="Black" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Label x:Name="lblBlueScoreName" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontWeight="Bold">Home Score</Label>
+                        <Label x:Name="lblBlueScore" FontSize="102" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,-20,0,0">0</Label>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="cmdIncBlueScore" Content="+" Width="50"></Button>
+                            <Button x:Name="cmdDecBlueScore" Content="-" Width="50"></Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+        </Border>
+        <Border Grid.Column="1" Grid.Row="0">
+            <DockPanel>
+                <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+                    <Label x:Name="lblGameClock" DockPanel.Dock="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="150" Margin="0,0,0,-20" Background="{x:Null}" Foreground="White">
+                        <Label.Effect>
+                            <DropShadowEffect/>
+                        </Label.Effect> 00:00
+                    </Label>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="cmdGameInc1Min" Content="+ 1 min" Margin="0,0,5,0"></Button>
+                        <Button x:Name="cmdGameDec1Min" Content="- 1 min" Margin="0,0,20,0"></Button>
+                        <Button x:Name="cmdGameInc1Sec" Content="+ 1 sec" Margin="0,0,5,0"></Button>
+                        <Button x:Name="cmdGameDec1Sec" Content="- 1 sec"></Button>
+                    </StackPanel>
+                    <Label DockPanel.Dock="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,40,0,0">Break Clock</Label>
+                    <Label x:Name="lblBreakClock" DockPanel.Dock="Top" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="60" Margin="0,-20,0,0" Foreground="White">
+                        <Label.Effect>
+                            <DropShadowEffect/>
+                        </Label.Effect> 00:00
+                    </Label>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="cmdBreakInc1Min" Content="+ 1 min" Margin="0,0,5,0"></Button>
+                        <Button x:Name="cmdBreakDec1Min" Content="- 1 min" Margin="0,0,20,0"></Button>
+                        <Button x:Name="cmdBreakInc1Sec" Content="+ 1 sec" Margin="0,0,5,0"></Button>
+                        <Button x:Name="cmdBreakDec1Sec" Content="- 1 sec"></Button>
+                    </StackPanel>
+                </StackPanel>
+                <Border DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="cmdStart" Content="Start" Width="120" Height="40" Margin="0,0,5,0" Click="cmdStart_Click" />
+                        <Button x:Name="cmdReset" Content="Reset" Width="120" Height="40" Margin="0,0,5,0" Click="cmdReset_Click" />
+                        <Button x:Name="cmdHorn" Content="Horn" Width="120" Height="40" Margin="0,0,5,0" />
+                        <ToggleButton Height="40" Width="60" Margin="0,20,0,20" x:Name="SlideState">
+                            <Image Source="icoSettings_sm.png"></Image>
+                        </ToggleButton>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+        </Border>
+        <Border Grid.Column="2" Grid.Row="0">
+            <DockPanel>
+                <Label HorizontalAlignment="Center" DockPanel.Dock="Top">Away Team Name</Label>
+                <TextBox x:Name="txtRedName" HorizontalAlignment="Stretch" DockPanel.Dock="Top" HorizontalContentAlignment="Center" Text="AWAY" TextChanged="txtRedName_TextChanged" />
+                <Border VerticalAlignment="Bottom" DockPanel.Dock="Bottom" BorderBrush="#7FFFFFFF" CornerRadius="5" BorderThickness="2">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <TransformGroup>
+                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                    <RotateTransform Angle="196.26" CenterY="0.5" CenterX="0.5"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="Black" Offset="0"/>
+                            <GradientStop Color="Red" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <Label x:Name="lblRedScoreName" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontWeight="Bold">Away Score</Label>
+                        <Label x:Name="lblRedScore" FontSize="102" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0,-20,0,0">0</Label>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="cmdIncRedScore" Content="+" Width="50"></Button>
+                            <Button x:Name="cmdDecRedScore" Content="-" Width="50"></Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+        </Border>
+    </Grid>
+
+</Window>
